@@ -1,0 +1,199 @@
+
+ <HTML> 
+<HEAD> 
+<TITLE>Rotating Ball ins</TITLE>
+<style>
+input { color:red;float:left;}
+#canvas{float:left;}
+</style>
+ </HEAD> 
+<BODY> <DIV> <CANVAS ID="canvas" width="1050" height="630" style="border:2px solid black"> 
+</CANVAS> </DIV> 
+<DIV> <CANVAS ID="canvas2" width="270" height="630" style="border:2px solid black"> 
+</CANVAS> </DIV> 
+
+
+<SCRIPT type="text/javascript"> 
+var canvas,canvas2; var ctx,ctx2,r; var x = 50; var y = 150; var dx = 2; var dy = 4; var WIDTH = 1050; var HEIGHT = 630 ;var i=0,j=0,m=0,k=150,l=1,lif=4,ball=0,io=0;var co="red",img,ballwidth=15,p=1; 
+var briks =Array();
+function left(){if(briks.length>0) {if(k>0){clear();k=k-30;rectangle();weite();}}}
+function right(){if(briks.length>0) {if(k+200<WIDTH){clear();k=k+30;rectangle();weite();}}}
+function circle() { if(briks.length>0) {ctx.beginPath(); ctx.fillStyle="green"; ctx.arc(x, y,ballwidth, 0, Math.PI*2, true);i=x;j=y; ctx.fill(); ctx.closePath();}}  
+function clear() { if(briks.length>0) {ctx.clearRect(0,0,1050,700);ctx2.clearRect(0,0,270,630);}} 
+function rectangle(){if(briks.length>0) {ctx.fillStyle=co;ctx.fillRect(k,540,200,50);ctx.beginPath(); ctx.fillStyle="green"; ctx.arc(k+15, 600,10, 0, Math.PI*2, true); ctx.fill();
+ctx.fillStyle="green"; ctx.arc(k+185, 600,10, 0, Math.PI*2, true); ctx.fill(); ctx.closePath();
+}}
+function init() {   r = setInterval(draw, 8);} 
+function draw() { if(briks.length>0&&p==1) {clear();weite(); rectangle();circle();bild();
+
+if(y-ballwidth<=((briks[0].Hig)*3))
+{
+	for(i=0;i<briks.length;i++)
+	{ 
+	 // console.log("checking");
+	   if(x>=briks[i].X  && x<=briks[i].X+briks[i].Wid &&y-ballwidth>briks[i].Y &&y-ballwidth<=briks[i].Y+briks[i].Hig)
+	   {
+		   console.log("hit");
+		   briks.splice(i, 1);
+		   dy = -dy; l=1;
+		   ball+=50;
+	   }
+	
+	}
+}
+if (x+ballwidth> WIDTH || x-ballwidth< 0) {dx = -dx;l=1;} 
+else if ( y-ballwidth< 0 ) {dy = -dy; l=1;}
+else if(y+ballwidth> HEIGHT ){ clearInterval(r); l=0;clear();life();}
+else if( y>519 && y<525 && x+ballwidth>k && x-ballwidth<k+200 ){
+	if(x+ballwidth>k && x-ballwidth<k+20||x+ballwidth>k+180 && x-ballwidth<k+200)
+	{
+		if(dx>0)
+		{
+			dx=3
+		}
+		else
+		{
+			dx=-3;
+		}
+	}
+	else
+	{
+		if(dx>0)
+		{
+			dx=2
+		}
+		else
+		{
+			dx=-2;
+		}
+	}
+	
+	dy=-4; l=1;ball=ball+30;weite();}
+if(l==1){x += dx; y += dy;}}
+else
+{
+	weite2();
+} }
+function weite2()
+{  ctx.font="50px Jokerman";ctx.fillStyle="red";
+          ctx.fillText(" BRICK BREAKER  ",250,100);
+	if(briks.length<=0)
+	{
+		ctx.fillText("congo you won fist game ever :p",45,300);
+	}
+	else if(p==0 && ball!=0)
+	{
+		ctx.fillText("game paused dont move",120,340);
+	}
+	else
+	{
+		
+		ctx.fillText(" press space to start",220,300);
+		ctx.fillText("use left and right arrow to control bord",25,370);
+		ctx.fillText("press space to pause and reasume",150,430);
+	}
+	
+}
+
+
+function weite() { ctx2.font="50px Jokerman";ctx2.fillStyle="red" ;ctx2.fillText("SCORE",45,45);ctx2.fillStyle="green" ;ctx2.fillText(ball,15,150);
+if(lif<=0){ctx.font="50px Jokerman";ctx.fillStyle="red" ;ctx.fillText("shame on YOU cant even play good:P",45,300);ctx2.fillText("LOL :p",30,300);ctx2.fillStyle="red" ;ctx2.fillText("DIL TOOT GAYA",15,500);ctx2.fillText("GAYA",35,575);m++;
+			if(m>1){ctx.font="50px Jokerman";ctx.fillStyle="red" ;ctx.fillText("now shaking bord will not do any thing go ",5,75);
+			ctx.fillText(" STUDY :p",400,150)};}
+		   if(lif>=1){
+				if(ball<300 && ball>0){ctx2.fillStyle="blue" ;ctx2.fillText("a kid can",15,225);ctx2.fillText("play better",5,300);ctx2.fillText("than YOU",30,375);}
+				else if(ball<600 && ball>300){ctx2.fillStyle="green" ;ctx2.fillText("better",35,300);}
+				else if(ball<900&& ball>600){ctx2.fillStyle="red" ;ctx2.fillText("padhe hote ",20,225);ctx2.fillText("ieta to",30,300);ctx2.fillText("pass ho gate",40,375);}
+				else if(ball>900){ctx2.fillStyle="red" ;ctx2.fillText("get life...",30,300);}
+				ctx2.fillStyle="red" ;ctx2.fillText("life",110,550);
+                                 ctx2.font="70px Jokerman";ctx.fillStyle="green" ;ctx2.fillText(lif,15,550);ctx2.fillText(" * ",45,575);
+				 
+
+				}
+}
+
+function block()
+{    var x=0;
+    var  y=0;
+	 var wid=30;
+	 var hig=30;
+	for(a=0;a<(WIDTH/30);a++)
+	{
+		var brik = {X:x, Y:y, Wid:wid, Hig:hig};
+		var brik2 = {X:x, Y:y+wid, Wid:wid, Hig:hig};
+		var brik3 = {X:x, Y:y+(wid*2), Wid:wid, Hig:hig};
+		
+		x+=30;
+		briks.push(brik);
+		briks.push(brik2);
+		briks.push(brik3);
+		
+		
+	}
+	
+}
+function bild()
+{    ctx.fillStyle="brown";
+	for(i=0;i<briks.length;i++)
+	{   ctx.fillRect(briks[i].X,briks[i].Y,briks[i].Wid,briks[i].Hig);
+		ctx.strokeRect(briks[i].X,briks[i].Y,briks[i].Wid,briks[i].Hig);
+		
+	}
+}
+function life(a=0)
+{
+	if(a==1)
+	{
+		lif=4;
+	}
+lif--;
+ x = 50; y = 150;i=0;j=0;k=150;l=1;dx=2;
+if(lif>=1)
+{
+init();
+}
+if(lif<=0)
+{
+m=0;
+weite();
+}
+
+}
+function first()
+{ 
+
+canvas2 = document.getElementById ("canvas2"); ctx2 = canvas2.getContext("2d"); canvas = document.getElementById ("canvas"); ctx = canvas.getContext("2d");
+
+	block();
+	
+	life(1);
+	
+}
+function pause()
+{
+	if(p==1)
+	{
+		p=0;
+	}
+	else
+	{
+		p=1;
+	}
+	
+}
+document.onkeydown=function(e)
+{
+e=e||window.event;
+switch(e.which||e.keyCode){
+case(37):{if(p==1)left();break;}
+case(39):{if(p==1)right();break;}
+case(32):{pause();break;}
+}
+}
+p=0;
+
+first();
+weite2();
+ </SCRIPT> 
+</BODY> 
+</HTML> 
